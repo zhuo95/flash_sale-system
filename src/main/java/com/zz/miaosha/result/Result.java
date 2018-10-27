@@ -1,5 +1,8 @@
 package com.zz.miaosha.result;
 
+/**
+ * 返回的res
+ */
 public class Result<T> {
 	
 	private int code;

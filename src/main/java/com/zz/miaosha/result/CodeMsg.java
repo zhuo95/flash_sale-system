@@ -1,5 +1,8 @@
 package com.zz.miaosha.result;
 
+/**
+ * 返回的code message
+ */
 public class CodeMsg {
 	
 	private int code;
