@@ -2,11 +2,9 @@ package com.zz.miaosha.redis;
 
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 
 @Service
 public class RedisService {
@@ -16,11 +14,11 @@ public class RedisService {
 
 
 
-    public <T> T get(String key, Class<T> clazz){
+    public <T> T get(KeyPrefix prefix,String key, Class<T> clazz){
         Jedis jedis = null;
         try{
             jedis = jedisPool.getResource();
-            String str = jedis.get(key);
+            String str = jedis.get(prefix.getPrefix()+key);
             T t = strToBean(str,clazz);
             return t;
         }finally {
@@ -28,13 +26,18 @@ public class RedisService {
         }
     }
 
-    public <T> boolean set(String key, T value){
+    public <T> boolean set(KeyPrefix prefix,String key, T value){
         Jedis jedis = null;
         try{
             jedis = jedisPool.getResource();
             String str = beanTostr(value);
+            int second = prefix.expiireSeconds();
             if (str==null||str.length()<=0) return false;
-            jedis.set(key, str);
+            if(second<=0){
+                jedis.set(prefix.getPrefix()+key, str);
+            }else {
+                jedis.setex(prefix.getPrefix()+key, second ,str);
+            }
             return true;
         }finally {
             returnToPoll(jedis);
