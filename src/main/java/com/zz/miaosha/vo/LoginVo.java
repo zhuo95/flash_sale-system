@@ -1,7 +1,14 @@
-package vo;
+package com.zz.miaosha.vo;
+
+import com.zz.miaosha.validator.IsMobile;
+
+import javax.validation.constraints.NotNull;
 
 public class LoginVo {
+    @NotNull
+    @IsMobile
     private String mobile;
+    @NotNull
     private String password;
 
     public String getMobile() {
