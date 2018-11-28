@@ -15,6 +15,7 @@ import com.zz.miaosha.vo.LoginVo;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
 
 @Service
 public class MiaoshaUserService {
@@ -63,6 +64,16 @@ public class MiaoshaUserService {
         //延长有效时间
         if (user!=null) addCookie(response,user);
         return user;
+    }
+
+    public boolean signup(MiaoshaUser user){
+        if (user == null) throw new GlobalException(CodeMsg.SERVER_ERROR);
+        String salt = "zz_2_salt";
+        user.setSalt(salt);
+        String pass = MD5Util.formPassToDBPass(user.getPassword(),user.getSalt());
+        user.setPassword(pass);
+        int res = miaoshaUserDao.insertUser(user);
+        return res==0;
     }
 }
 
