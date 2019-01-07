@@ -42,7 +42,7 @@ public class RedisService {
         }
     }
 
-    private <T> String beanTostr(T value) {
+    public  <T> String beanTostr(T value) {
         if(value==null){
             return null;
         }
@@ -57,7 +57,7 @@ public class RedisService {
         return JSON.toJSONString(value);
     }
 
-    private <T> T strToBean(String str, Class<T> clzz) {
+    public  <T> T strToBean(String str, Class<T> clzz) {
         if(str==null || str.length()<=0 || clzz==null ) return null;
         if(clzz == int.class || clzz == Integer.class){
             return (T) Integer.valueOf(str);

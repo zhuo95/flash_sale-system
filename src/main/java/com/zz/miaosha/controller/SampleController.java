@@ -1,6 +1,7 @@
 package com.zz.miaosha.controller;
 
 import com.zz.miaosha.domain.User;
+import com.zz.miaosha.rabbitMQ.MQSender;
 import com.zz.miaosha.redis.RedisService;
 import com.zz.miaosha.redis.UserKey;
 import com.zz.miaosha.result.Result;
@@ -18,6 +19,9 @@ public class SampleController {
     UserService userService;
     @Autowired
     RedisService redisService;
+    @Autowired
+    MQSender mqSender;
+
 
     @RequestMapping("/db/get")
     @ResponseBody
@@ -40,4 +44,26 @@ public class SampleController {
         String res = redisService.get(UserKey.getById,"1",String.class);
         return Result.success(res);
     }
+
+    @RequestMapping("/mq/topic")
+    @ResponseBody
+    public Result<String> mq(){
+        mqSender.sendTopic("hello world");
+        return Result.success("send success");
+    }
+
+    @RequestMapping("/mq/fanout")
+    @ResponseBody
+    public Result<String> fanout(){
+        mqSender.sendFanout("hello world");
+        return Result.success("send success");
+    }
+
+    @RequestMapping("/mq/header")
+    @ResponseBody
+    public Result<String> header(){
+        mqSender.sendHeader("hello world");
+        return Result.success("send success");
+    }
+
 }

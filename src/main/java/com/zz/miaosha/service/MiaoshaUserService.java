@@ -72,6 +72,7 @@ public class MiaoshaUserService {
         user.setSalt(salt);
         String pass = MD5Util.formPassToDBPass(user.getPassword(),user.getSalt());
         user.setPassword(pass);
+
         int res = miaoshaUserDao.insertUser(user);
         return res==0;
     }
