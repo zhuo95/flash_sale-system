@@ -26,6 +26,7 @@ public class MQConfig {
     public static final String TOPIC_EXCHANGE = "topic_exchange";
     public static final String FANOUT_EXCHANGE = "fanout_exchange";
     public static final String HEADERS_EXCHANGE = "headers_exchange";
+    public static final String MIAOSHA_QUEUE = "miaosha.queue";
 
 
     /**
@@ -34,7 +35,7 @@ public class MQConfig {
      */
     @Bean
     public Queue queue(){
-        return new Queue(NAME, true); //第二个参数：是否持久化
+        return new Queue(MIAOSHA_QUEUE, true); //第二个参数：是否持久化
     }
 
     /**

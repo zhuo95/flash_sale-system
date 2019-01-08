@@ -14,6 +14,8 @@ public class GoodsService {
     MiaoshaProductDao goodsDao;
 
 
+    public List<MiaoshaProduct> list(){return goodsDao.list();}
+
     public MiaoshaProduct getGoodsVoByGoodsId(long goodsId) {
         return goodsDao.getById(goodsId);
     }

@@ -109,6 +109,7 @@ public class RedisService {
         }
     }
 
+    //删掉所有
     public boolean delete(KeyPrefix prefix) {
         if(prefix == null) {
             return false;

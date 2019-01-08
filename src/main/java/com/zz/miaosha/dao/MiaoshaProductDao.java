@@ -3,8 +3,13 @@ package com.zz.miaosha.dao;
 import com.zz.miaosha.domain.MiaoshaProduct;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 @Mapper
 public interface MiaoshaProductDao {
+
+    @Select("select * from miaosha_product")
+    public List<MiaoshaProduct> list();
 
     @Select("select * from miaosha_product where id= #{id}")
     public MiaoshaProduct getById(@Param("id") long id);
